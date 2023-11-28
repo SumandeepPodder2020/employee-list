@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>View / Update User</h1>
+<div mat-dialog-content>
+<form [formGroup]="editViewForm" class="edit-view-form">
+    <div class="mat-mdc-form-field-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="nameCtrl" type="text">        
+            <mat-error *ngIf="checkValidation('nameCtrl')">
+                Name can't be blank
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mat-mdc-form-field-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Job Title</mat-label>
+            <mat-select formControlName="jobTitleCtrl" name="JobTitle">
+            @for (title of jobTitle; track title) {
+                <mat-option [value]="title">{{title}}</mat-option>
+            }
+            </mat-select>
+            <mat-error *ngIf="checkValidation('jobTitleCtrl')">
+                Job Title should be selected
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mat-mdc-form-field-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Age</mat-label>
+            <input matInput appNumberOnly formControlName="ageCtrl" placeholder="Age" type="number" >
+        </mat-form-field>
+    </div>
+    <div class="mat-mdc-form-field-container">
+        <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input placeholder="dd-mm-yyyy" formControlName="startDateCtrl" matInput [matDatepicker]="pickerTwo">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerTwo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTwo></mat-datepicker>
+            <mat-error *ngIf="checkValidation('startDateCtrl')">
+                Job Title should be selected
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="mat-mdc-form-field-container">
+        <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input matInput placeholder="dd-mm-yyyy" formControlName="endDateCtrl" [matDatepicker]="pickerThree">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerThree"></mat-datepicker-toggle>
+            <mat-datepicker #pickerThree></mat-datepicker>
+        </mat-form-field>
+    </div>  
+    <div class="mat-mdc-form-field-container">
+        <button class="update" [disabled]="!editViewForm?.valid" (click)="updateUser()">
+        Update Detail
+        </button>
+        <button class="cancel" mat-button mat-dialog-close>
+        Cancel
+        </button>
+    </div>
+</form>
+</div>

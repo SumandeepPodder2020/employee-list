@@ -1,0 +1,165 @@
+<div class="employee-list-page">
+    <h2>Employee List</h2>
+    <form [formGroup]="addUserForm" class="add-user-form-container">
+      <table *ngIf="isAddUserFormOpen" class="add-user-table" #addUserTable>
+          <thead>
+        <tr>
+          <th #emptyTh>#</th>
+          <th>Name</th>
+          <th>Job Title</th>
+          <th>Age</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Action 
+            <button class="action-icons" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path fill="white" fill-rule="evenodd" d="M13.325 15.076c-.437-.05-.88-.076-1.325-.076c-1.981 0-3.907.508-5.479 1.447c-1.22.728-2.174 1.684-2.78 2.771c-.275.494.055 1.072.607 1.187c3.509.732 7.096.954 10.652.669V21h-1a3 3 0 0 1-.675-5.924Z" clip-rule="evenodd"/><path stroke="white" stroke-linecap="round" stroke-width="2.5" d="M18 14v8m4-4h-8"/><circle cx="12" cy="8" r="5" fill="white"/></g></svg>
+            </button>
+          </th>
+        </tr>
+          </thead>
+      <tbody>     
+        <tr>
+          <td></td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="nameCtrl" placeholder="Name" type="text">
+              <mat-error *ngIf="checkValidation('nameCtrl')">
+                Name can't be blank
+            </mat-error>
+            </mat-form-field>
+          </td>
+          <td> 
+            <mat-form-field appearance="outline">
+              <mat-select formControlName="jobTitleCtrl" name="JobTitle">
+                @for (title of jobTitle; track title) {
+                  <mat-option [value]="title">{{title}}</mat-option>
+                }
+              </mat-select>
+              <mat-error *ngIf="checkValidation('jobTitleCtrl')">
+                Job Title should be selected
+            </mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input appNumberOnly matInput formControlName="ageCtrl" placeholder="Age" >
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input placeholder="dd-mm-yyyy" formControlName="startDateCtrl" matInput [matDatepicker]="picker">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="checkValidation('startDateCtrl')">
+                Job Title should be selected
+            </mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="dd-mm-yyyy" formControlName="endDateCtrl" [matDatepicker]="pickerOne">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerOne"></mat-datepicker-toggle>
+              <mat-datepicker #pickerOne></mat-datepicker>
+            </mat-form-field>          
+          </td>
+          <td>
+            <button class="action-icons save-cancel" [disabled]="!addUserForm?.valid" (click)="addUser()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M21 7v14H3V3h14zm-9 11q1.25 0 2.125-.875T15 15q0-1.25-.875-2.125T12 12q-1.25 0-2.125.875T9 15q0 1.25.875 2.125T12 18m-6-8h9V6H6z"/></svg>
+            </button>
+            <button class="action-icons save-cancel" (click)="cancelAdd()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"/></svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </form>
+      <table>
+      <thead *ngIf="!isAddUserFormOpen">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Job Title</th>
+          <th>Age</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Action 
+            <button class="action-icons" (click)="openAddUserForm()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path fill="white" fill-rule="evenodd" d="M13.325 15.076c-.437-.05-.88-.076-1.325-.076c-1.981 0-3.907.508-5.479 1.447c-1.22.728-2.174 1.684-2.78 2.771c-.275.494.055 1.072.607 1.187c3.509.732 7.096.954 10.652.669V21h-1a3 3 0 0 1-.675-5.924Z" clip-rule="evenodd"/><path stroke="white" stroke-linecap="round" stroke-width="2.5" d="M18 14v8m4-4h-8"/><circle cx="12" cy="8" r="5" fill="white"/></g></svg>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td #emptyTd></td>
+          <td>
+            <mat-form-field appearance="outline" class="search-fields">
+              <input matInput [disabled]="isAddUserFormOpen" [(ngModel)]="name" placeholder="Search By Name" type="text">
+            </mat-form-field>
+          </td>
+          <td> 
+            <mat-form-field appearance="outline" class="search-fields">
+              <mat-select [(ngModel)]="selectedJobTitle" [disabled]="isAddUserFormOpen" name="JobTitle">
+                @for (title of jobTitle; track title) {
+                  <mat-option [value]="title">{{title}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" class="search-fields">
+              <input matInput appNumberOnly [(ngModel)]="age" [disabled]="isAddUserFormOpen" placeholder="Age">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" class="search-fields">
+              <input placeholder="dd-mm-yyyy" [disabled]="isAddUserFormOpen" [(ngModel)]="strDt" matInput [matDatepicker]="startDate">
+              <mat-datepicker-toggle matIconSuffix [for]="startDate"></mat-datepicker-toggle>
+              <mat-datepicker #startDate></mat-datepicker>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field appearance="outline" class="search-fields">
+              <input matInput placeholder="dd-mm-yyyy" [disabled]="isAddUserFormOpen" [(ngModel)]="endDt" [matDatepicker]="endDate">
+              <mat-datepicker-toggle matIconSuffix [for]="endDate"></mat-datepicker-toggle>
+              <mat-datepicker #endDate></mat-datepicker>
+            </mat-form-field>          
+          </td>
+          <td>
+            <button class="action-icons" [disabled]="isAddUserFormOpen || (!name && !selectedJobTitle && !age && !strDt && !endDt)" (click)="filter()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M14 12v7.88c.04.3-.06.62-.29.83a.996.996 0 0 1-1.41 0l-2.01-2.01a.989.989 0 0 1-.29-.83V12h-.03L4.21 4.62a1 1 0 0 1 .17-1.4c.19-.14.4-.22.62-.22h14c.22 0 .43.08.62.22a1 1 0 0 1 .17 1.4L14.03 12H14Z"/></svg>
+            </button>
+            <button class="action-icons" [disabled]="isAddUserFormOpen" (click)="resetFilter()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.758 17.243L12.001 12m5.243-5.243L12 12m0 0L6.758 6.757M12.001 12l5.243 5.243"/></svg>
+            </button>
+          </td>
+        </tr>
+        @for (user of displayUserArr; track user?.slNo) {
+        <tr >
+          <td>{{user?.slNo}}</td>
+          <td>{{user?.name}}</td>
+          <td>{{user?.jobTitle}}</td>
+          <td>{{user?.age}}</td>
+          <td>{{user?.startDate | date: 'dd-MM-yyyy'}}</td>
+          <td>
+            @if (user?.endDate) {
+              {{user?.endDate | date: 'dd-MM-yyyy'}}
+            }
+            @else {
+              <label class="working">Currently Working</label>
+            }
+          </td>
+          <td>
+            <button class="action-icons" (click)="editViewDetail(user)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M12 16q1.875 0 3.188-1.313T16.5 11.5q0-1.875-1.313-3.188T12 7q-1.875 0-3.188 1.313T7.5 11.5q0 1.875 1.313 3.188T12 16Zm0-1.8q-1.125 0-1.913-.788T9.3 11.5q0-1.125.788-1.913T12 8.8q1.125 0 1.913.788T14.7 11.5q0 1.125-.787 1.913T12 14.2Zm0 4.8q-3.65 0-6.65-2.038T1 11.5q1.35-3.425 4.35-5.463T12 4q3.65 0 6.65 2.038T23 11.5q-1.35 3.425-4.35 5.463T12 19Zm0-7.5Zm0 5.5q2.825 0 5.188-1.488T20.8 11.5q-1.25-2.525-3.613-4.013T12 6Q9.175 6 6.812 7.488T3.2 11.5q1.25 2.525 3.613 4.013T12 17Z"/></svg>
+            </button>
+            <button class="action-icons" [disabled]="displayUserArr?.length === 1" (click)="deleteUser(user)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7ZM17 6H7v13h10V6ZM9 17h2V8H9v9Zm4 0h2V8h-2v9ZM7 6v13V6Z"/></svg>
+            </button>
+          </td>
+        </tr>      
+        }
+      </tbody>
+      </table>
+  </div>

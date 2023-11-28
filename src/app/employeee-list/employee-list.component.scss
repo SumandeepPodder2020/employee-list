@@ -1,0 +1,61 @@
+@import "./../../styles.scss";
+.employee-list-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h2 {
+        color: $btn-primary-color;
+    }
+    .action-icons {
+        border: none;
+        background-color: $btn-primary-color;
+        border-radius: 5px;
+        padding: 5px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .add-user-form-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    table {
+        border-collapse: collapse;
+        tr {
+            th, td {
+                border-top: 1px solid $black;
+                border-bottom: 1px solid $black;
+            }
+            &.tr-add-user {
+                height: 60px;
+            }
+        }
+        th, td {
+            text-align: left;
+            padding: 10px;
+        }
+        
+    }
+    table.add-user-table {
+        tr {
+            td {
+                border-bottom: none;
+                padding-top: 32px;
+                .action-icons {
+                    &.save-cancel {
+                        position: relative;
+                        top: -10px;
+                    }
+                }
+            }
+        }
+    }
+    .working {
+        color: #fff;
+        background-color: #5dc32a;
+        border-radius: 5px;
+        padding: 5px;
+    }
+   
+}
