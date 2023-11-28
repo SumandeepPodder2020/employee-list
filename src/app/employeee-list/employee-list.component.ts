@@ -92,7 +92,7 @@ export class EmployeeListComponent implements OnInit {
       slNo: this.users.length+1,
       name: this.addUserForm.controls['nameCtrl'].value,
       jobTitle: this.addUserForm.controls['jobTitleCtrl'].value,
-      age: this.addUserForm.controls['ageCtrl'].value,
+      age:  Number(this.addUserForm.controls['ageCtrl'].value),
       startDate: this.addUserForm.controls['startDateCtrl'].value,
       endDate: this.addUserForm.controls['endDateCtrl'].value
     });
@@ -140,7 +140,12 @@ export class EmployeeListComponent implements OnInit {
 
   evaluateExpression(expression: FilterOperationType, obj: any): boolean {
     const { key, value } = expression;
-    const propValue = obj[key];      
+    let propValue;
+    if (key === 'startDate' || key === 'endDate') {
+      propValue = this.datePipe.transform(obj[key], 'dd-MM-yyyy')?.toString()
+    } else {
+      propValue = obj[key]; 
+    }         
     return propValue === value;
   }
 
