@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeListComponent } from './employeee-list/employee-list.component';
 
 
 
